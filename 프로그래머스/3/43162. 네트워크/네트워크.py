@@ -1,4 +1,5 @@
 from collections import deque
+
 def solution(n, computers):
     visited = [[False] * n]
     com_dic = {}
@@ -8,7 +9,6 @@ def solution(n, computers):
         for j in computers[i]:
             if i not in com_dic:
                 com_dic[i] = []
-
             if j == 1:
                 com_dic[i].append(num)
             num += 1
