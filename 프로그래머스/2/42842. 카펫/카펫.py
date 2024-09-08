@@ -1,11 +1,13 @@
 def solution(brown, yellow):
-    total = brown + yellow  
-    for y in range(1, int(total**0.5) + 1): 
-        if total % y == 0:  
-            x = total // y  
-         
-            if (x - 2) * (y - 2) == yellow:
-                return [x, y]
-
-brown, yellow = 24, 24
-print(solution(brown, yellow))
+    answer = []
+    total = brown + yellow
+    for i in range(1, int(total**0.5)):
+        if yellow % i == 0:
+            x = yellow // i
+            y = i
+            if (2*x) + (2*y) + 4 == brown:
+                answer.append(x+2)
+                answer.append(y+2)
+                break;
+    answer.sort(reverse=True)
+    return answer
