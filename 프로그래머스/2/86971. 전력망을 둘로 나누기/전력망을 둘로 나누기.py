@@ -1,30 +1,38 @@
+from itertools import combinations
 from collections import deque
-def check(start, end, visited, graph):
-    visited[start] = 1
-    visited[end] = 1
-    q = deque()
-    q.append(end)
-    cnt = 1
-    while q:
-        cur = q.popleft()
-        for next in graph[cur]:
-            if not visited[next]:
-                visited[next] = 1
-                cnt += 1
-                q.append(next)
-    return cnt
 
 def solution(n, wires):
-    answer = -1
-    graph = [[] for _ in range(n+1)]
-    for s, e in wires:
-        graph[s].append(e)
-        graph[e].append(s)
-    answer = float("inf")
-    for s,e in wires:
-        visited = [0] * (n+1)
-        res = check(s, e, visited, graph)
-        alpha = abs(n - res)
-        res = abs(res - alpha)
-        answer = min(answer, res)
+    answer = n  
+
+    def bfs(start):
+        visited[start] = True
+        queue = deque([start])
+        cnt = 1  
+        while queue:
+            cur_v = queue.popleft()
+            for v in graph[cur_v]:
+                if not visited[v]:
+                    visited[v] = True
+                    queue.append(v)
+                    cnt += 1  
+        return cnt
+
+    for c in combinations(wires, len(wires) - 1):
+        graph = [[] for _ in range(n + 1)]  
+        visited = [False] * (n + 1) 
+        
+
+        for w in c:
+            graph[w[0]].append(w[1])
+            graph[w[1]].append(w[0])
+        
+
+        cnts = bfs(1)  
+        
+
+        other_cnts = n - cnts
+        
+
+        answer = min(answer, abs(cnts - other_cnts))
+
     return answer
