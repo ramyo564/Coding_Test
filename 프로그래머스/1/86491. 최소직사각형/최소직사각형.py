@@ -1,11 +1,14 @@
 def solution(sizes):
-    max_width = 0
-    max_length = 0
+    answer = 0
+    length = 0
+    width = 0
 
     for i in sizes:
-        if max(i) > max_length:
-            max_length = max(i)
-        if min(i) > max_width:
-            max_width = min(i)
+        y, x = i
+        if length < max(y, x):
+            length = max(y, x)
 
-    return max_width * max_length
+        if width < min(y, x):
+            width = min(y, x)
+
+    return length * width
