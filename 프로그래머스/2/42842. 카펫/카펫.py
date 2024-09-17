@@ -1,11 +1,7 @@
 def solution(brown, yellow):
-    answer = []
-    total = brown + yellow
-
-    for y in range(1, total):
-        if yellow % y == 0:
-            x = yellow // y
-        if (2 * x) + (2 * y) + 4 == brown:
-            answer.append(x + 2)
-            answer.append(y + 2)
-            return answer
+    for i in range(1, yellow + 1):
+        if yellow % i == 0:
+            y = yellow // i
+            x = i
+            if (2+y) * (2+x) == yellow + brown:
+                return [y+2, x+2]
