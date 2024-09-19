@@ -1,16 +1,12 @@
 import sys
 
-tc = int(sys.stdin.readline().strip())
-person = []
+n = int(sys.stdin.readline())
 
-for _ in range(tc):
-    a, b = map(int, sys.stdin.readline().split())
-    person.append([a,b]) 
+people_spec = [list(map(int, sys.stdin.readline().split())) for _ in range(n)]
 
-
-for size in person: 
+for i in people_spec:
     rank = 1
-    for comp in person: 
-        if size[0] < comp[0] and size[1] < comp[1]:
+    for j in people_spec:
+        if i[0] < j[0] and i[1] < j[1]:
             rank += 1
-    print(rank, end=' ')
+    print(rank, end=" ")
