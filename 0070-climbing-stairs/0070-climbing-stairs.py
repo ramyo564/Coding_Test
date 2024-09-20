@@ -1,3 +1,6 @@
+dic = {}
+
+
 class Solution(object):
     def climbStairs(self, n):
         """
@@ -9,5 +12,7 @@ class Solution(object):
         if n == 2:
             return 2
 
-        return self.climbStairs(n - 1) + self.climbStairs(n - 2)
+        if n not in dic:
+            dic[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
 
+        return dic[n]
