@@ -1,12 +1,11 @@
-sugar = int(input())
-
+n = int(input())
 bag = 0
-while sugar >= 0 :
-    if sugar % 5 == 0 :  
-        bag += (sugar // 5) 
-        print(bag)
-        break
-    sugar -= 3
-    bag += 1  
-else :
+while n >= 0:
+    if n % 5 == 0:
+       bag += (n // 5)
+       print(bag)
+       break
+    n -= 3
+    bag += 1
+else:
     print(-1)
