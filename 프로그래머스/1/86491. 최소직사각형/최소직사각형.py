@@ -1,10 +1,12 @@
 def solution(sizes):
-    width = 0
     length = 0
+    width = 0
     for i in sizes:
-        if width < max(i):
-            width = max(i)
-        if length < min(i):
-            length = min(i)
+        temp = max(i)
+        temp2 = min(i)
+        if length < temp:
+            length = temp
+        if width < temp2:
+            width = temp2
 
     return length * width
