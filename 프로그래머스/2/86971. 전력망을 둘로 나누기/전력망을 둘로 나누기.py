@@ -1,9 +1,9 @@
-from itertools import combinations
 from collections import deque
+from itertools import combinations
+
 
 def solution(n, wires):
     answer = n
-
     def bfs(start):
         visited[start] = True
         queue = deque([start])
@@ -12,19 +12,20 @@ def solution(n, wires):
             cur_v = queue.popleft()
             for v in graph[cur_v]:
                 if not visited[v]:
-                    visited[v] = True
                     queue.append(v)
+                    visited[v] = True
                     cnt += 1
         return cnt
 
     for c in combinations(wires, len(wires) - 1):
-        visited = [False] * (n+1)
         graph = [[] for _ in range(n + 1)]
-        for w in c:
-            graph[w[0]].append(w[1])
-            graph[w[1]].append(w[0])
+        visited = [False] * (n + 1)
+        for i in c:
+            graph[i[0]].append(i[1])
+            graph[i[1]].append(i[0])
 
-        first_net = bfs(1)
-        second_net = n - first_net
-        answer = min(answer, abs(first_net - second_net))
+        first = bfs(1)
+        second = n - first
+        answer = min(abs(first-second), answer)
+
     return answer
