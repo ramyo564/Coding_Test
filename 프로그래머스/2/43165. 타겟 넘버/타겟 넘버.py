@@ -1,21 +1,20 @@
 from collections import deque
+
+
 def solution(numbers, target):
     answer = 0
-
     queue = deque()
-    queue.append((numbers[0], 0))
-    queue.append((-numbers[0], 0))
+    queue.append([numbers[0] * -1, 0])
+    queue.append([numbers[0], 0])
 
     while queue:
-        temp, idx = queue.popleft()
-        if idx < len(numbers) - 1:
-            idx += 1
-            queue.append((temp + numbers[idx], idx))
-            queue.append((temp - numbers[idx], idx))
-
-
+        cur_v, idx = queue.popleft()
+        idx += 1
+        if idx < len(numbers):
+            queue.append([cur_v + numbers[idx], idx])
+            queue.append([cur_v - numbers[idx], idx])
         else:
-            if temp == target:
+            if cur_v == target:
                 answer += 1
 
     return answer
