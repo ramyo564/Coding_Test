@@ -1,24 +1,28 @@
+
 from collections import deque
+
+
 def solution(n, computers):
     visited = [False] * n
-    list = [[] * n for _ in range(n)]
+    graph = [[] * n for _ in range(len(computers))]
     answer = 0
 
-    for i in range(n):
-        for j in range(n):
+    for i in range(len(computers)):
+        for j in range(len(computers[0])):
             if computers[i][j] == 1:
-                list[i].append(j)
-    print(list)
+                graph[i].append(j)
+
     def bfs(start):
+        visited[start] = True
         queue = deque()
-        queue.append(list[i])
-        visited[i] = True
+        queue.append(start)
+
         while queue:
-            linked_computer = queue.popleft()
-            for com in linked_computer:
-                if not visited[com] and com in list[com]:
-                    visited[com] = True
-                    queue.append(list[com])
+            cur_v = queue.popleft()
+            for v in graph[cur_v]:
+                if not visited[v]:
+                    visited[v] = True
+                    queue.append(v)
 
     for i in range(n):
         if not visited[i]:
