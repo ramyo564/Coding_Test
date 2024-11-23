@@ -2,23 +2,19 @@ from collections import deque
 
 
 def solution(priorities, location):
-    priority = deque(sorted(priorities, reverse=True))
     queue = deque()
-    answer = 0
+    for idx, value in enumerate(priorities):
+        queue.append([value, idx])
 
-    for idx, v in enumerate(priorities):
-        queue.append([idx, v])
+    priorities.sort()
+    cnt = 0
+    while queue:
+        if priorities[-1] == queue[0][0]:
+            cnt += 1
+            priorities.pop()
+            temp = queue.popleft()
 
-    while priority:
-        target_peek = priority[0]
-        idx, cur_v = queue.popleft()
-
-        if cur_v == target_peek:
-            priority.popleft()
-            answer += 1
+            if location == temp[1]:
+                return cnt
         else:
-            queue.append([idx, cur_v])
-        if idx == location and cur_v == target_peek:
-            break
-
-    return answer
+            queue.append(queue.popleft())
