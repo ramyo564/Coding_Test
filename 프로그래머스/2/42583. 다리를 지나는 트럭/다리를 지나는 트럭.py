@@ -2,21 +2,22 @@ from collections import deque
 
 
 def solution(bridge_length, weight, truck_weights):
-    answer = 0  # 걸린 시간
-    # 현재 다리 상황, 0 : 빈 다리 공간
-    bridge = deque([0] * bridge_length)
-    truck_weights = deque(truck_weights)
+    bridge_q = deque([0] * bridge_length)
+    truck_q = deque(truck_weights)
+    current_weight = 0
+    time_cnt = 0
 
-    truck_weight_in_bridge = 0  # 다리 위에 있는 트럭의 무게
-    while bridge:
-        truck_weight_in_bridge -= bridge.popleft()  # 다리를 지나간 트럭은 무게에서 제외
-        answer += 1
+    while bridge_q:
+        current_weight -= bridge_q.popleft()
+        time_cnt += 1
 
-        if truck_weights:
-            if truck_weight_in_bridge + truck_weights[0] <= weight:
-                truck_weight_in_bridge += truck_weights[0]
-                bridge.append(truck_weights.popleft())
+        if truck_q:
+            if weight >= current_weight + truck_q[0]:
+                truck = truck_q.popleft()
+                current_weight += truck
+                bridge_q.append(truck)
+
             else:
-                bridge.append(0)
+                bridge_q.append(0)
 
-    return answer
+    return time_cnt
