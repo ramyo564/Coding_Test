@@ -5,7 +5,8 @@ while n >= 0:
        bag += (n // 5)
        print(bag)
        break
-    n -= 3
-    bag += 1
+    else:
+        n -= 3
+        bag += 1
 else:
     print(-1)
