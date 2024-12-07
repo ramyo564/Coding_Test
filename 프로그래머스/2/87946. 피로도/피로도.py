@@ -1,16 +1,16 @@
-
 from itertools import permutations
 
 
 def solution(k, dungeons):
-    answer = 0
-    for p in permutations(dungeons, len(dungeons)):
-        temp = k
+    max_cnt = 0
+    for i in permutations(dungeons, len(dungeons)):
+        start = k
         cnt = 0
-        for need, spend in p:
-            if temp >= need:
-                temp -= spend
+        for requisite, energy in i:
+            if start >= requisite:
+                start -= energy
                 cnt += 1
-        answer = max(cnt, answer)
-
-    return answer
+            else:
+                break
+        max_cnt = max(max_cnt, cnt)
+    return max_cnt
