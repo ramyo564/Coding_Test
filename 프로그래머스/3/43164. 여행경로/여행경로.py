@@ -1,4 +1,3 @@
-
 from collections import deque
 
 
@@ -15,7 +14,8 @@ def solution(tickets):
 
         for idx, ticket in enumerate(tickets):
             depart, arrived = ticket
-            if depart == path[-1] and not idx in used:
+            x = path[-1]
+            if depart == x and not idx in used:
                 q.append((path +[arrived], used + [idx]))
 
     answer.sort()
