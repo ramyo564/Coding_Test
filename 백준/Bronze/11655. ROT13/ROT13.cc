@@ -1,36 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
-	
-	string name, result;
-	char letter;
-	
-int main(){
 
-	getline(cin, name);
-	for (int i = 0; i < name.length(); i++){
-		letter = name[i];
-		if (65<= letter && letter <= 90){
-			if(77 < letter){
-				result += 'A' + letter - 78;
-			}
-			else{
-				result += letter + 13;
-			}
+int arr[26];
+string str;
+string ret;
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	// A-Z 65 ~ 90
+	// a-z 97 ~ 122
+	getline(cin, str);
+
+	// cout << str;
+
+	for (char s : str)
+	{
+		// 대문자
+		if (s >= 'A' && s <= 'Z')
+		{
+			ret += (s-'A' + 13) %26 + 'A';
 		}
-		else if (97 <= letter && letter <= 122){
-			if(109 < letter){
-				result += 'a' + letter - 110;
-			}
-			else {
-				result += letter + 13;
-			}
+		// 소문자
+		else if (s >= 'a' && s <= 'z')
+		{
+			ret += (s-'a' +13) % 26 +'a';
 		}
-		else {
-			result += letter;
+		else
+		{
+			ret += s;
 		}
 	}
-	
-	cout << result << endl;
-
-    return 0;
+	cout << ret;
+	return 0;
 }
