@@ -2,8 +2,7 @@
 using namespace std;
 
 string str;
-int cnt[26];
-
+int arr[26];
 int main()
 {
 	ios_base::sync_with_stdio(false);
@@ -11,15 +10,12 @@ int main()
 	cout.tie(NULL);
 
 	cin >> str;
-
-	for(char ch : str){
-		cnt[ch-'a']++;
+	
+	for (char s : str){
+		arr[s-'a'] ++;
 	}
-
-	for (int i=0; i<26; i++){
-		// cout << char(i+'a') << " "
-		cout << cnt[i] << " ";
-	}
+	
+	for (int n:arr) cout << n <<" ";
 
 	return 0;
 }
