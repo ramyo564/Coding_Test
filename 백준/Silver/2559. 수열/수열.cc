@@ -1,31 +1,17 @@
-#include <bits/stdc++.h>
-using namespace std;
-	
-
+#include<bits/stdc++.h> 
+using namespace std;  
+typedef long long ll;  
+int n, k, temp, psum[100001], ret = -1000000; 
 int main(){
-	int N, K;
-	cin >> N >> K;
-	vector<int> arr(N);
-	for (int i=0; i<N; i++){
-		cin >> arr[i];
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);cout.tie(NULL);
+	cin >> n >> k; 
+	for(int i = 1; i <= n; i++){
+		cin >> temp; psum[i] = psum[i - 1] + temp; 
+	} 
+	for(int i = k; i <= n; i++){
+		ret = max(ret, psum[i] - psum[i - k]);
 	}
-	
-	int temp = 0;
-	for (int i = 0; i < K; i++){
-		temp += arr[i];
-	}
-	
-	int temp_idx = K-1;
-	int second_temp = temp;
-	
-	for (int i = 0; i < N-K; i++){
-		second_temp -= arr[i];
-		temp_idx += 1;
-		second_temp += arr[temp_idx];
-		if (temp < second_temp) temp = second_temp;
-	}
-
-	cout << temp;
-	
+	cout << ret << "\n";
     return 0;
 }
