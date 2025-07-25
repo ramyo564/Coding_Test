@@ -1,68 +1,21 @@
-#include <bits/stdc++.h>
-using namespace std;
-	
-vector<string> split(const string& input, string delimiter){
-	vector<string> result;
-	auto start = 0;
-	auto end = input.find(delimiter);
-	while(end != string::npos){
-		result.push_back(input.substr(start,end-start));
-		start = end + delimiter.size();
-		end = input.find(delimiter, start);
-		
-	}
-	result.push_back(input.substr(start));
-	return result;
-}
-	
-string target, temp;
-int num;
-string first_word, second_word;
-
+#include<bits/stdc++.h> 
+using namespace std;   
+int n; 
+string s, ori_s, pre, suf; 
 int main(){
-	
-	cin >> num;
-	cin >> target;
-	
-	vector<string> targets = split(target, "*");
-	
-	first_word = targets[0];
-	second_word = targets[1];
-	string result[num];
-	
-	for (int i = 0; i < num; i++){
-		bool flag = true;
-		cin >> temp;
-		if(temp.length()< first_word.length() + second_word.length()){
-			flag = false;	
-		} else {
-			for (int j = 0; j< first_word.length(); j++){
-			if(temp[j] != first_word[j]){
-				flag = false;
-				break;
-			}
-		}
-			
-			if(flag){
-				for (int k = 0; k < second_word.length(); k++){
-					if(temp[temp.length()-second_word.length()+k] != second_word[k]){
-						flag = false;
-					}
-				}
-			}
-		}
-		if (flag){
-			result[i] = "DA";
-			
-		} else {
-			result[i] = "NE";
-			
-		}
-		flag = true;
-	}
-	for (int i = 0; i < num; i++){
-		cout << result[i] << endl;
-	}
-	
+    cin >> n;
+    cin >> ori_s;  
+    int pos = ori_s.find('*');  
+    pre = ori_s.substr(0, pos); 
+    suf = ori_s.substr(pos + 1); 
+    for(int i = 0; i < n; i++){
+        cin >> s; 
+        if(pre.size() + suf.size() > s.size()){
+            cout << "NE\n";
+        }else{
+            if(pre == s.substr(0, pre.size()) && suf == s.substr(s.size() - suf.size())) cout << "DA\n";
+            else cout <<"NE\n";  
+        } 
+    } 
     return 0;
-}
+} 
