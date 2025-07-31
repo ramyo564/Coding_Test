@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -6,28 +5,28 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        // StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[27];
+        int N = Integer.parseInt(st.nextToken());
+
+        int[] arr = new int[26];
+
         String ret = "";
 
         for (int i = 0; i < N; i++) {
-            String target = br.readLine();
-            target.charAt(0);
-            arr[target.charAt(0) - 'a']++;
+            arr[br.readLine().charAt(0) - 'a']++;
         }
 
         for (int i = 0; i < 26; i++) {
             if (arr[i] >= 5) {
-                ret += (char) ('a' + i);
+                ret += (char) (i + 'a');
             }
         }
 
-        if (ret.length() < 1) {
-            System.out.println("PREDAJA");
-        } else {
+        if (ret.length() != 0) {
             System.out.println(ret);
+        } else {
+            System.out.println("PREDAJA");
         }
 
     }
