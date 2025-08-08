@@ -1,33 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int N;
-int ret;
+int N, ret;
+string temp;
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     cin >> N;
-    
+
     for (int i = 0; i < N; i++)
     {
         stack<char> st;
-        string s;
-        cin >> s;
-        for (int j = 0; j < s.length(); j++)
+        cin >> temp;
+        st.push(temp[0]);
+        for (int j = 1; j < temp.length(); j++)
         {
-            if(st.empty() || st.top() != s[j]){
-                st.push(s[j]);
-            }else{
+            if(!st.empty() && temp[j] == st.top()){
                 st.pop();
+            }else{
+                st.push(temp[j]);
             }
         }
-        if(st.empty())
-            ret++;
-        
-        
+
+        if(st.size() == 0){
+            ret ++;
+        }
     }
     cout << ret;
+
     return 0;
 }
