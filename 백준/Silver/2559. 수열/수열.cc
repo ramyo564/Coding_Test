@@ -1,35 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int N, K;
 int main()
 {
-    	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);cout.tie(NULL);
-    int N, K, num, lastIdx, temp, ret=0, startIdx=0;
-    int arr [100001] = {};
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int ret = 0, temp = 0;
     cin >> N >> K;
-    
-    for (int i = 0; i < N; i++){
+    int arr[N] = {};
+
+    for (int i = 0; i < N; i++)
+    {
         cin >> arr[i];
     }
 
-    for (int i = 0; i < K; i++){
+    for (int i = 0; i < K; i++)
+    {
         ret += arr[i];
     }
-    
+
     temp = ret;
-    for (int i = K; i < N; i++){
-        
-        temp = temp - arr[startIdx] + arr[i];
-        if (temp > ret){
+    int j = 0;
+    for (int i = K; i < N; i++)
+    {
+        temp = temp - arr[j] + arr[i];
+        if (ret < temp)
+        {
             ret = temp;
         }
-        startIdx += 1;
+        j++;
     }
 
     cout << ret;
-
-
 
     return 0;
 }
