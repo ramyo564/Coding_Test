@@ -5,23 +5,18 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        // StringTokenizer st = new StringTokenizer(br.readLine());
 
-        String target = br.readLine();
-        String ret = "";
+        String ret = br.readLine();
 
-        for (int i = target.length() - 1; i >= 0; i--)
-        {
-            ret += target.charAt(i);
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = ret.length() - 1; i >= 0; i--) {
+            sb.append(ret.charAt(i));
         }
-        
 
-        if (target.equals(ret))
-        {
+        if (ret.equals(sb.toString())){
             System.out.println(1);
-        }
-        else
-        {
+        }else{
             System.out.println(0);
         }
 
