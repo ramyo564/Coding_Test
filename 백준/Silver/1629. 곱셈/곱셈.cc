@@ -1,24 +1,19 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h> 
 using namespace std;
-
-long long A, B, C;
-
-long long mod_pow(long long a, long long b, long long c) {
-    long long result = 1;
-    a %= c;
-    while (b > 0) {
-        if (b % 2 == 1) result = (result * a) % c;
-        a = (a * a) % c;
-        b /= 2;
-    }
-    return result;
+typedef long long ll;
+ll a, b, c;
+ll go(ll a, ll b){
+    if(b == 1) return a % c;
+    ll ret = go(a, b / 2);
+    ret = (ret * ret) % c;
+	if(b % 2)ret = (ret * a)% c;
+    return ret;
 }
-
-int main(){
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-
-    cin >> A >> B >> C;
-    cout << mod_pow(A, B, C) << "\n";
+    cout.tie(NULL);
+    cin >> a >> b >> c;
+    cout << go(a, b) << "\n";
     return 0;
 }
