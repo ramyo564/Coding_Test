@@ -1,42 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int N, K, ret;
+
+int N, M, cnt;
+
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    cin >> N >> K;
+    cin >> N >> M;
 
-    int arr[N] = {};
-
-    for (int i = 0; i < N; i++)
-    {
+    int arr[N] = {} ;
+    for (int i = 0; i < N; i++){
         cin >> arr[i];
     }
+
     sort(arr, arr + N);
 
-    int r = N - 1;
-    int l = 0;
+    int right = N-1;
+    int left = 0;
 
-    while (r != l)
-    {
-        if (arr[r] + arr[l] == K)
-        {
-            ret++;
-            l++;
+    while (right != left){
+        if(arr[left] + arr[right] == M){
+            cnt ++;
+            left ++;
         }
-        else if (arr[r] + arr[l] < K)
-        {
-            l++;
-        }
-        else
-        {
-            r--;
+        else if (arr[left] + arr[right] > M){
+            right --;
+        }else {
+            left ++;
         }
     }
-    cout << ret;
+    cout << cnt;
 
     return 0;
 }
