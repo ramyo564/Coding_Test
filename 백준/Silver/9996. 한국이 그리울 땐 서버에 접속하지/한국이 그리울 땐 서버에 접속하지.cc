@@ -1,21 +1,32 @@
-#include<bits/stdc++.h> 
-using namespace std;   
-int n; 
-string s, ori_s, pre, suf; 
-int main(){
-    cin >> n;
-    cin >> ori_s;  
-    int pos = ori_s.find('*');  
-    pre = ori_s.substr(0, pos); 
-    suf = ori_s.substr(pos + 1); 
-    for(int i = 0; i < n; i++){
-        cin >> s; 
-        if(pre.size() + suf.size() > s.size()){
-            cout << "NE\n";
-        }else{
-            if(pre == s.substr(0, pre.size()) && suf == s.substr(s.size() - suf.size())) cout << "DA\n";
-            else cout <<"NE\n";  
-        } 
-    } 
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int N;
+    string target, temp, front, back;
+
+    cin >> N >> target;
+    size_t pos = target.find('*');
+    front = target.substr(0, pos);
+    back = target.substr(pos + 1);
+
+    for (int i = 0; i < N; i++)
+    {
+        cin >> temp;
+        if (temp.size() < front.size() + back.size())
+        {
+            cout << "NE" << "\n";
+            continue;
+        }
+        if (temp.substr(0, front.size()) != front || temp.substr(temp.size() - back.size()) != back)
+        {
+            cout << "NE" << "\n";
+        }
+        else {
+            cout << "DA" << "\n";
+        }
+    }
+
     return 0;
-} 
+}
