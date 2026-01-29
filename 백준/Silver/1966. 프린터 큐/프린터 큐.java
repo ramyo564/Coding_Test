@@ -1,7 +1,5 @@
-
 import java.io.*;
 import java.util.*;
-
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -26,40 +24,45 @@ public class Main {
             int N = Integer.parseInt(st.nextToken());
             int M = Integer.parseInt(st.nextToken());
             int q_idx = 0;
-            int cur_v = 0;
+            int printed_cnt = 0;
+            int maxP = 0;
 
             Queue<Q> q = new LinkedList<>();
-            Queue<Q> ProQ = new LinkedList<>();
 
             StringTokenizer paper = new StringTokenizer(br.readLine());
             ArrayList<Integer> arr = new ArrayList<>();
 
 
-            for (int r = 0; r < N; r++){
+            for (int r = 0; r < N; r++) {
                 int num = Integer.parseInt(paper.nextToken());
                 q.add(new Q(num, q_idx));
                 arr.add(num);
                 q_idx++;
             }
             arr.sort(Collections.reverseOrder());
+            maxP = arr.get(0);
 
-            while(true){
+            while (true) {
                 Q temp = q.peek();
-
-                if (temp.paper_priority == arr.get(0)){
-                    q.poll();
-                    arr.remove(0);
-                    cur_v++;
-                    if (temp.idx == M){
-                        break;
-                    }
-                } else {
+                if (temp.paper_priority < maxP) {
                     q.add(q.poll());
+                    continue;
                 }
 
+                q.poll();
+                arr.remove(0);
+                if (!arr.isEmpty()) {
+                    maxP = arr.get(0);
+                }
+
+                printed_cnt++;
+                if (temp.idx == M) {
+                    System.out.println(printed_cnt);
+                    break;
+                }
 
             }
-            System.out.println(cur_v);
+
 
         }
 
