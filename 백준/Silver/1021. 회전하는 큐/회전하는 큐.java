@@ -2,66 +2,77 @@
 import java.io.*;
 import java.util.*;
 
+import static java.lang.Math.min;
+
+/**
+ * 백준 1966번: 프린터 큐
+ * https://www.acmicpc.net/problem/1021
+ */
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        Deque<Integer> deque = new ArrayDeque<>();
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int d_value = 1;
-        // 데크 초기화
-        for (int i = 0; i < N; i++) {
-            deque.addLast(d_value++);
+
+        int q_cnt = Integer.parseInt(st.nextToken());
+        int target_cnt = Integer.parseInt(st.nextToken());
+
+        Deque<Integer> deque = new ArrayDeque<>();
+
+        // deque 초기화
+        for (int i = 1; i < q_cnt + 1; i++) {
+            deque.addLast(i);
         }
-        int[] arr = new int[M];
+
+        // target 리스트 배열 만들기
+        int[] targets_list = new int[target_cnt];
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < M; i++) {
-            // N = 문서 갯수 / M = 언제 출력 되는지 알아내고 싶은 문서의 위치
-            int target_num = Integer.parseInt(st.nextToken());
-            arr[i] = target_num;
+        for (int i = 0; i < target_cnt; i++) {
+            targets_list[i] = Integer.parseInt(st.nextToken());
         }
+
         int total_rot = 0;
         int target_idx = 0;
 
-        while (target_idx < arr.length) {
-            int cur = deque.peekFirst();
-
-            if (cur == arr[target_idx]) {
+        while (target_idx < targets_list.length) {
+            int temp = deque.peekFirst();
+            if (temp == targets_list[target_idx]) {
                 deque.removeFirst();
                 target_idx++;
-                if (target_idx == arr.length) {
-                    System.out.println(total_rot);
-                    break;
-                }
-            } else {
-                // 1. 목표 위치 찾기
-                int target_pos = 0;
-                for (int i : deque) {
 
-                    if (i == arr[target_idx]) {
+            } else {
+                // 오른쪽 왼쪽 결정하기 -> position 구하기
+                int pos = 0;
+                for (int t : deque) {
+                    if (t == targets_list[target_idx]) {
                         break;
                     }
-                    target_pos++;
+                    pos++;
                 }
 
-                // 2. 좌우 회전 비교
-                int left_rot = target_pos;
-                int right_rot = deque.size() - target_pos;
+                // 오른 쪽은 pos
+                int right = pos;
 
-                // 3. 최소 회전 실행
-                if (left_rot <= right_rot) {
-                    deque.addLast(deque.removeFirst());  // 왼쪽 회전
-                } else {
-                    deque.addFirst(deque.removeLast());  // 오른쪽 회전
+                // 왼쪽은 전체 데크 사이즈에서 pos 를 뺀 값
+                int left = deque.size() - pos;
+
+                if (right <= left){
+                    for (int i = 0; i<right; i ++){
+                        total_rot++;
+                        deque.addLast(deque.removeFirst());
+                    }
+
+                }else {
+                    for (int i = 0; i<left; i ++){
+                        total_rot++;
+                        deque.addFirst(deque.removeLast());
+                    }
+
                 }
-                total_rot++;  // 무조건 +1
+
             }
-
         }
-
-
+        System.out.println(total_rot);
         br.close();
     }
 }
