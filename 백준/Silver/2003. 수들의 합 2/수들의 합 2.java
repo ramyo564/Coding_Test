@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,18 +20,18 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        while (left <= right) {
-            if (sum == M) {
-                cnt++;
-            }
-            if (sum <= M && right != N) {
-                sum += arr[right++];
-            } else if (left == right) {
-                break;
-            } else {
+
+        while (true) {
+            if (sum >= M) {              
+                if (sum == M) cnt++;     
                 sum -= arr[left++];
+            } else {                     
+                if (right == N) break;   
+                sum += arr[right++];
             }
         }
+
         System.out.println(cnt);
+
     }
 }
