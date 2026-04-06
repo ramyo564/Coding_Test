@@ -2,23 +2,16 @@ import java.util.*;
 
 public class Solution {
     public int[] solution(int[] arr) {
-        int[] answer = {};
+        List<Integer> list = new ArrayList<>();
 
-        if (arr.length == 0){
-            return answer;
-        }
-
-        Deque<Integer> dq = new ArrayDeque<>();
-        dq.push(arr[0]);
-
-        for (int i = 1; i < arr.length; i++){
-            int now = arr[i];
-            int last_deque = dq.peekLast();
-            if(last_deque != now){
-                dq.addLast(arr[i]);
+        int prev = -1;
+        for (int num : arr) {
+            if (num != prev) {
+                list.add(num);
+                prev = num;
             }
         }
-        ArrayList<Integer> arrayList = new ArrayList<>(dq);
-        return arrayList.stream().mapToInt(Integer::intValue).toArray();
+
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
