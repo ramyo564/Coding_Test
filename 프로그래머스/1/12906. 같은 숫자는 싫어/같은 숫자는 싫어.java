@@ -1,12 +1,12 @@
 import java.util.*;
 
 public class Solution {
-    public int[] solution(int[] arr) {
-        List<Integer> list = new ArrayList<>();
-
+    public int[] solution(int []arr) {
+        
+        ArrayList<Integer> list = new ArrayList<>();
         int prev = -1;
-        for (int num : arr) {
-            if (num != prev) {
+        for(int num : arr){
+            if(num != prev){
                 list.add(num);
                 prev = num;
             }
