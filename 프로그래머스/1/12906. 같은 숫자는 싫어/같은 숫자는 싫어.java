@@ -1,15 +1,16 @@
 import java.util.*;
 
 public class Solution {
-    public int[] solution(int []arr) {
-        
-        ArrayList<Integer> list = new ArrayList<>();
+    public int[] solution(int []arr) { 
         int prev = -1;
-        for(int num : arr){
-            if(num != prev){
-                list.add(num);
-                prev = num;
+        List<Integer> list = new ArrayList<>();
+    
+        for(int i : arr){
+            if(prev == i){
+                continue;
             }
+            list.add(i);
+            prev = i;
         }
 
         return list.stream().mapToInt(Integer::intValue).toArray();
