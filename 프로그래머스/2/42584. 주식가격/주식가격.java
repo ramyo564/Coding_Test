@@ -2,30 +2,23 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] prices) {
-        // 우선 완전 탐색으로 해보자
-        Queue<Integer> q = new LinkedList<>();
-        for(int i : prices){
-            q.add(i);
-        }
-        
+        int n = prices.length;
+        int[] answer = new int[n];
+        Deque<Integer> dq = new ArrayDeque<>();
 
-        List<Integer> list = new ArrayList<>();
-        int idx = 1;
-        while(!q.isEmpty()){
-            int target = q.poll();
-            int cnt = 0;
-            for (int i = idx; i < prices.length; i++){
-                cnt++;
-                if(prices[i] >= target){
-                    continue;
-                }else {
-                    break;
-                }
-            }
-            list.add(cnt);
-            idx++;
+        for (int i = 0; i < n; i++) {
+          while (!dq.isEmpty() && prices[dq.peekFirst()] > prices[i]) {
+            int idx = dq.pollFirst();
+            answer[idx] = i - idx;
+          }
+          dq.addFirst(i);
         }
-        
-        return list.stream().mapToInt(Integer::intValue).toArray();
+
+        while (!dq.isEmpty()) {
+          int idx = dq.pollFirst();
+          answer[idx] = n - 1 - idx;
+        }
+
+        return answer;
     }
 }
