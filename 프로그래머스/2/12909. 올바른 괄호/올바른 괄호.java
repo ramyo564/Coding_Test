@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Solution {
     boolean solution(String s) {
         boolean answer = true;
@@ -8,11 +10,10 @@ class Solution {
                 cnt++;
                 continue;
             }
-            cnt --;
-
-            if(cnt < 0){
-                break;
+            if (cnt <= 0){
+                return false;
             }
+            cnt--;
         }
 
         return cnt == 0;
