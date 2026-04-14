@@ -1,30 +1,35 @@
 import java.util.*;
+
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-    int N = truck_weights.length;
-    // 다리모델링
-    Deque<Integer> br = new ArrayDeque<>();
+            // 다리 모델링
+    Deque<Integer> bg = new ArrayDeque<>();
     for (int i = 0; i < bridge_length; i++) {
-      br.push(0);
+      bg.push(0);
     }
 
-    int idx = 0;
-    int cur_weight = 0;
+    // 전역 상태 값
     int time = 0;
+    int cur_wt = 0;
+    // 트럭 인덱스
+    int idx = 0;
 
-    while (!br.isEmpty()) {
+    // 다리는 무게만 체크
+    while (true) {
+      cur_wt -= bg.poll();
       time++;
-      cur_weight -= br.pollLast();
-      if (idx < N && weight >= cur_weight + truck_weights[idx]) {
-        br.addFirst(truck_weights[idx]);
-        cur_weight += truck_weights[idx];
+      if (idx < truck_weights.length && weight >= cur_wt + truck_weights[idx]) {
+        bg.offer(truck_weights[idx]);
+        cur_wt += truck_weights[idx];
         idx++;
-      } else if (idx == N) {
-        continue;
       } else {
-        br.addFirst(0);
+        bg.offer(0);
       }
+
+      if (cur_wt == 0) {
+        return time;
+      }
+    } 
+        
     }
-    return time;
-  }
 }
