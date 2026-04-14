@@ -2,40 +2,34 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] sequence, int k) {
-        // l r = k?
-        // 만약 같다면 가장 앞에 있는거
-        // 만약 같다면 가장 짧은거
+        int N = sequence.length;
         
-        // 앞에 있는건 처음부터 인덱스 돌면됨
-        // 가장 짧은건 전역 상태로 관리하면됨
-            int l = 0;
-    int r = 0;
-    int n = sequence.length;
-    int temp = 0;
-    int len = 1000001;
-    int[] result = new int[2];
-    while (r < n) {
-      temp += sequence[r];
-      while (k < temp) {
-        temp -= sequence[l];
-        l++;
-      }
-      if (temp == k) {
-        if (l == r) {
-          result[0] = l;
-          result[1] = r;
-          return result;
+        // 상태관리
+        // 현재 값 
+        int now = 0;
+        // idx 
+        int l = 0;
+        int r = 0;
+        // 최소값
+        int len = 1000001;
+        
+        int[] ans = new int[2];
+        
+        while (r < N) {
+          now += sequence[r];
+          while (now > k && l < r) {
+            now -= sequence[l++];
+          }
+          if (now == k) {
+            if (len > r - l) {
+              len = r - l;
+              ans[0] = l;
+              ans[1] = r;
+            }
+          }
+          r++;
         }
-        if (len > r - l) {
-          len = r - l;
-          result[0] = l;
-          result[1] = r;
-        }
-      }
-      r++;
-    }
-
-    return result;
-
+        
+        return ans;
     }
 }
