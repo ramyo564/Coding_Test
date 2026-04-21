@@ -1,57 +1,51 @@
 import java.util.*;
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
-    int N = genres.length;
-
-    // 장르별 토탈 횟수 해시맵 정리
-    // 장르별 인덱스 및 플레이 횟수 정리 (클래스필요)
-    // 클래스 선언하기
-
-    class Song {
-      int idx;
-      int play;
-
-      Song(int idx, int play) {
-        this.idx = idx;
-        this.play = play;
-      }
-    }
-
-    HashMap<String, Integer> genTotalCnt = new HashMap<>();
-    HashMap<String, ArrayList<Song>> songData = new HashMap<>();
-
-    for (int i = 0; i < N; i++) {
-      String genre = genres[i];
-      int play = plays[i];
-      // 장르별 토탈 카운트
-      genTotalCnt.put(genre, genTotalCnt.getOrDefault(genre, 0) + play);
-      // 장르별 인덱스 및 플레이 횟수 정리
-      songData.putIfAbsent(genre, new ArrayList<>());
-      songData.get(genre).add(new Song(i, play));
-    }
-
-    // genre ranking 정렬 시작
-    List<String> rankingGen = new ArrayList<>(genTotalCnt.keySet());
-    rankingGen.sort((a, b) -> genTotalCnt.get(b) - genTotalCnt.get(a));
-
-    // 정렬된 ranking 순으로 작업 시작
-    List<Integer> temp = new ArrayList<>();
-    for (String genre : rankingGen) {
-      List<Song> list = songData.get(genre);
-      // Song 정렬
-      list.sort(
-          (a, b) -> {
-            if (b.play - a.play == 0) {
-              return 0;
+        
+        int N = plays.length;
+        // 장르 랭킹 해시맵
+        // 노래 정보 해시맵
+        class Song{
+            int idx;
+            int play;
+            Song(int idx, int play){
+                this.idx = idx;
+                this.play = play;
             }
-            return b.play - a.play;
-          });
-
-      for (int i = 0; i < Math.min(2, list.size()); i++) {
-        temp.add(list.get(i).idx);
-      }
-    }
-
-    return temp.stream().mapToInt(i -> i).toArray();
+        }
+        
+        HashMap<String, Integer> genresPlayCnt = new HashMap<>();
+        HashMap<String, ArrayList<Song>> songData = new HashMap<>();
+        
+        for(int i = 0; i < N; i ++){
+            String genre = genres[i];
+            int play = plays[i];
+            genresPlayCnt.put(genre, genresPlayCnt.getOrDefault(genre, 0) + play);
+            songData.putIfAbsent(genre, new ArrayList<>());
+            songData.get(genre).add(new Song(i, play));
+        }
+        
+        // genres 내림차순 정렬
+        List<String> rankingGenre = new ArrayList<>(genresPlayCnt.keySet());
+        rankingGenre.sort((a,b) -> genresPlayCnt.get(b) - genresPlayCnt.get(a));
+        
+        List<Integer> ans = new ArrayList<>();
+        // 정렬순으로 데이터 정규화
+        for(String genre : rankingGenre){
+            List<Song> data = songData.get(genre);
+            data.sort((a,b) -> {
+                if(a.play == b.play){
+                    return 0;
+                }
+                return b.play - a.play;
+            });
+            
+            // 조건에 맞는 idx 2개 씩 뽑기
+            for(int i = 0; i < Math.min(2, data.size()); i++){
+                ans.add(data.get(i).idx);
+            }   
+        }
+        
+        return ans.stream().mapToInt(i->i).toArray();
     }
 }
