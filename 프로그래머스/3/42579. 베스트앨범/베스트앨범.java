@@ -1,38 +1,36 @@
 import java.util.*;
 class Solution {
-    public int[] solution(String[] genres, int[] plays) {
-        
-        int N = plays.length;
-        // 장르 랭킹 해시맵
-        // 노래 정보 해시맵
-        class Song{
-            int idx;
-            int play;
-            Song(int idx, int play){
-                this.idx = idx;
-                this.play = play;
-            }
+    class Song {
+        int idx;
+        int play;
+        Song(int idx, int play){
+            this.idx = idx;
+            this.play = play;
         }
-        
-        HashMap<String, Integer> genresPlayCnt = new HashMap<>();
-        HashMap<String, ArrayList<Song>> songData = new HashMap<>();
-        
-        for(int i = 0; i < N; i ++){
+    }
+    public int[] solution(String[] genres, int[] plays) {
+        int N = genres.length;
+        // 장르별 랭킹 해시맵
+        HashMap<String, Integer> rankG = new HashMap<>();
+        // 장르별 플래이 및 인덱스 처리
+        HashMap<String, ArrayList<Song>> gData= new HashMap<>();
+        for(int i = 0; i < N; i++){
             String genre = genres[i];
             int play = plays[i];
-            genresPlayCnt.put(genre, genresPlayCnt.getOrDefault(genre, 0) + play);
-            songData.putIfAbsent(genre, new ArrayList<>());
-            songData.get(genre).add(new Song(i, play));
+            rankG.put(genre, rankG.getOrDefault(genre, 0) + play);
+            gData.putIfAbsent(genre, new ArrayList<Song>());
+            gData.get(genre).add(new Song(i, play));
         }
         
-        // genres 내림차순 정렬
-        List<String> rankingGenre = new ArrayList<>(genresPlayCnt.keySet());
-        rankingGenre.sort((a,b) -> genresPlayCnt.get(b) - genresPlayCnt.get(a));
+        // 장르별 랭킹 정렬
+        List<String> ranking = new ArrayList<>(rankG.keySet());
+        ranking.sort((a,b) -> rankG.get(b) - rankG.get(a));
         
+        // 정답 자료
         List<Integer> ans = new ArrayList<>();
-        // 정렬순으로 데이터 정규화
-        for(String genre : rankingGenre){
-            List<Song> data = songData.get(genre);
+        
+        for(String g : ranking){
+            List<Song> data = gData.get(g);
             data.sort((a,b) -> {
                 if(a.play == b.play){
                     return 0;
@@ -40,12 +38,14 @@ class Solution {
                 return b.play - a.play;
             });
             
-            // 조건에 맞는 idx 2개 씩 뽑기
-            for(int i = 0; i < Math.min(2, data.size()); i++){
+            // 2개씩 뽑기
+            for(int i = 0; i < Math.min(data.size(), 2); i++ ){
                 ans.add(data.get(i).idx);
-            }   
+            }    
         }
         
-        return ans.stream().mapToInt(i->i).toArray();
+        
+        
+        return ans.stream().mapToInt(i -> i).toArray();
     }
 }
