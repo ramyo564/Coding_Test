@@ -1,28 +1,32 @@
 import java.util.*;
-
 class Solution {
     public int[] solution(String[] operations) {
+        int N = operations.length;
         
         TreeSet<Integer> ts = new TreeSet<>();
-        int[] answer = new int[2];
-        
-        for(String ss : operations){
-            String[] s = ss.split(" ");
-            int num = Integer.parseInt(s[1]);
+
+        for(String s : operations){
+            String[] data = s.split(" ");
+            int num = Integer.parseInt(data[1]);
             
-            if(ss.startsWith("I")){
+            if(s.startsWith("I")){
                 ts.add(num);
-            }else if (ss.equals("D -1")){
-                ts.pollFirst();
-            }else if (ss.equals("D 1")){
-                ts.pollLast();
+            }else if(s.equals("D -1")){
+                if(!ts.isEmpty()){
+                    ts.pollFirst();
+                }
+            }else if(s.equals("D 1")){
+                if(!ts.isEmpty()){
+                    ts.pollLast();
+                }
             }
         }
-        if(ts.isEmpty()){
-            return answer;
-        }else {
-            answer[0] = ts.last();
+        
+        int[] answer = {0,0};
+        
+        if(!ts.isEmpty()){
             answer[1] = ts.first();
+            answer[0] = ts.last();
         }
         return answer;
     }
