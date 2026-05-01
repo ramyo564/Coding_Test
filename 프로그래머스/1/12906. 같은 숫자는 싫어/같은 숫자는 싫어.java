@@ -3,16 +3,17 @@ import java.util.*;
 public class Solution {
     public int[] solution(int []arr) {
         
+        ArrayList<Integer> ans = new ArrayList<>();
         int prev = -1;
-        List<Integer> list = new ArrayList<>();
         for(int i : arr){
-            if(i != prev){
-                list.add(i);
-                prev = i;
+            if(i == prev){
+                continue;
             }
+            ans.add(i);
+            prev = i;
         }
         
 
-        return list.stream().mapToInt(Integer::intValue).toArray();
+        return ans.stream().mapToInt(i->i).toArray();
     }
 }
