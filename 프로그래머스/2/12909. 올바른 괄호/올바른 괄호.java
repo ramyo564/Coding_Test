@@ -4,18 +4,22 @@ class Solution {
     boolean solution(String s) {
         boolean answer = true;
 
-        int cnt = 0;
+        int n = 0;
         for(char c : s.toCharArray()){
-            if(c == '('){
-                cnt++;
-                continue;
-            }
-            if (cnt <= 0){
+            if(n < 0){
                 return false;
             }
-            cnt--;
+            if(c == '('){
+                n++;
+            }else{
+                n--;
+            }
+        }
+        if(n != 0){
+            return false;
         }
 
-        return cnt == 0;
+
+        return answer;
     }
 }
