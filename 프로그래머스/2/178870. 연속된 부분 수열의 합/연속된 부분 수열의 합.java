@@ -1,35 +1,38 @@
 import java.util.*;
-
 class Solution {
     public int[] solution(int[] sequence, int k) {
-        int N = sequence.length;
-        
-        // 상태관리
-        // 현재 값 
-        int now = 0;
-        // idx 
-        int l = 0;
-        int r = 0;
-        // 최소값
-        int len = 1000001;
-        
-        int[] ans = new int[2];
-        
-        while (r < N) {
-          now += sequence[r];
-          while (now > k && l < r) {
-            now -= sequence[l++];
+            int r = -1;
+    int l = 0;
+    int minIdx = 1000_001;
+    int first = 0;
+    int second = 0;
+
+    int target = 0;
+    while (r < sequence.length - 1) {
+      if (target < k) {
+        target += sequence[++r];
+      }
+
+      while (l <= r && target >= k) {
+        if (target == k) {
+          if (minIdx > r - l) {
+            minIdx = r - l;
+            first = l;
+            second = r;
           }
-          if (now == k) {
-            if (len > r - l) {
-              len = r - l;
-              ans[0] = l;
-              ans[1] = r;
-            }
+          if (minIdx == 0) {
+            return new int[] {l, r};
           }
-          r++;
         }
-        
-        return ans;
+        target -= sequence[l++];
+      }
+    }
+
+    int[] answer = new int[2];
+    answer[0] = first;
+    answer[1] = second;
+
+    return answer;
+
     }
 }
