@@ -1,36 +1,38 @@
 import java.util.*;
-
 class Solution {
     public int solution(int x, int y, int n) {
-        Deque<int[]> dq = new ArrayDeque<>();
-        // bfs 초기화
-        dq.offer(new int[]{x, 0});
         boolean[] visited = new boolean[y+1];
+        Deque<int[]> dq = new ArrayDeque<>();
+        dq.offer(new int[]{x , 0});
         visited[x] = true;
         
         while(!dq.isEmpty()){
-            int[] temp = dq.poll();
-            if(temp[0] == y){
-                return temp[1];
-            } else {
-                if (temp[0] + n <= y && !visited[temp[0] + n]){
-                    dq.offer(new int[]{temp[0] + n , temp[1] + 1});
-                    visited[temp[0] + n] = true;
-                }
-                if (temp[0] * 2  <= y && !visited[temp[0] * 2]){
-                    dq.offer(new int[]{temp[0] * 2 , temp[1] + 1});
-                    visited[temp[0] * 2] = true;
-                }
-                if (temp[0] * 3 <= y  && !visited[temp[0] * 3]){
-                    dq.offer(new int[]{temp[0] * 3 , temp[1] + 1});
-                    visited[temp[0] * 3] = true;
-                }
+            int[] data = dq.poll();
+            int X = data[0];
+            int V = data[1];
+            if(X == y){
+                return V;
             }
-
+            int temp1 = X * 3;
+            int temp2 = X * 2;
+            int temp3 = X + n;
+            if(y >= temp1 && !visited[temp1]){
+                dq.offer(new int[]{temp1, V+1});
+                visited[temp1] = true;
+            }
+            if(y >= temp2 && !visited[temp2]){
+                dq.offer(new int[]{temp2, V+1});
+                visited[temp2] = true;
+            }
+            if(y >= temp3 && !visited[temp3]){
+                dq.offer(new int[]{temp3, V+1});
+                visited[temp3] = true;
+            }
+            
             
         }
-        int answer = -1;
         
+        int answer = -1;
         return answer;
     }
 }
