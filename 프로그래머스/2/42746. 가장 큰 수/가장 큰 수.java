@@ -2,20 +2,18 @@ import java.util.*;
 
 class Solution {
     public String solution(int[] numbers) {
-        String[] sNum = new String[numbers.length];
+        String[] data = new String[numbers.length];
         for(int i = 0; i < numbers.length; i++){
-            sNum[i] = String.valueOf(numbers[i]);
+            data[i] = String.valueOf(numbers[i]);
         }
-        Arrays.sort(sNum, (a,b) -> (b+a).compareTo(a+b));
-        StringBuilder sb = new StringBuilder();
-        for(String s : sNum){
-            sb.append(s);
-        }
-        String rt = sb.toString();
-        if(rt.startsWith("0")){
+        Arrays.sort(data, (a,b) -> (b+a).compareTo(a+b));
+        if(data[0].equals("0")){
             return "0";
         }
-        
+        StringBuilder sb = new StringBuilder();
+        for(String s : data){
+            sb.append(s);
+        }
         return sb.toString();
     }
 }
