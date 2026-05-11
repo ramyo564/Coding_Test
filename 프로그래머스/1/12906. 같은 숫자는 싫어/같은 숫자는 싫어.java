@@ -2,18 +2,18 @@ import java.util.*;
 
 public class Solution {
     public int[] solution(int []arr) {
+        List<Integer> list = new ArrayList<>();
         
-        ArrayList<Integer> ans = new ArrayList<>();
         int prev = -1;
+        
         for(int i : arr){
-            if(i == prev){
-                continue;
+            if(i != prev){
+                list.add(i);
+                prev = i;
             }
-            ans.add(i);
-            prev = i;
         }
         
-
-        return ans.stream().mapToInt(i->i).toArray();
+        
+        return list.stream().mapToInt(i->i).toArray();
     }
 }
