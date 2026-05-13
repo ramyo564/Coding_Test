@@ -3,27 +3,26 @@ import java.util.*;
 class Solution {
     public int[] solution(String[] operations) {
         TreeSet<Integer> ts = new TreeSet<>();
-        
-        for(String s : operations){
-            String[] data = s.split(" ");
-            if(s.startsWith("I")){
-                ts.add(Integer.parseInt(data[1]));
-            }else if(s.equals("D 1")){
-                if(!ts.isEmpty()){
-                    ts.pollLast();
-                }
-            }else {
+        for(int i = 0; i < operations.length; i++){
+            String data = operations[i];
+            String num = data.split(" ")[1];
+            if(data.startsWith("I")){
+                ts.add(Integer.parseInt(num));
+            }else if(data.equals("D -1")){
                 if(!ts.isEmpty()){
                     ts.pollFirst();
                 }
+            }else{
+                if(!ts.isEmpty()){
+                    ts.pollLast();
+                }
             }
-        }
-        int[] answer = new int[]{0,0};
-        if(!ts.isEmpty()){
-            answer[0] = ts.last();
-            answer[1] = ts.first();
+            
             
         }
-        return answer;
+        if(!ts.isEmpty()){
+            return new int[]{ts.last(),ts.first()};
+        }
+        return new int[]{0,0};
     }
 }
