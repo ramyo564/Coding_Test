@@ -2,24 +2,17 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        boolean answer = true;
-
-        int n = 0;
+        int temp = 0;
         for(char c : s.toCharArray()){
-            if(n < 0){
+            if(temp < 0){
                 return false;
             }
             if(c == '('){
-                n++;
-            }else{
-                n--;
+                temp++;        
+            }else {
+                temp--;
             }
         }
-        if(n != 0){
-            return false;
-        }
-
-
-        return answer;
+        return temp == 0;
     }
 }
