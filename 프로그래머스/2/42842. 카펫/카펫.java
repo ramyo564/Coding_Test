@@ -1,32 +1,17 @@
-import java.util.*;
 class Solution {
-    Set<Integer> set = new HashSet<>();
     public int[] solution(int brown, int yellow) {
-        int sq = brown + yellow;
-        int temp = brown + yellow;
-        while (temp > 0){
-            if(!set.contains(temp) && sq % temp == 0){
-                set.add(sq/temp);
-                set.add(temp);
+       int result = brown + yellow;
+       double squareRoot = Math.sqrt(result);
+ 
+            for (int width = (int) squareRoot; width >= 1; width--) {
+                if (result % width == 0) {
+                    int height = result / width;
+                    if ((width - 2) * (height - 2) == yellow) {
+                        return new int[]{height, width};
+                    }
+                }
             }
-            temp--;
-        }
-        int X = 0;
-        int Y = 0;
-        for(int i : set){
-            int K = sq / i;
-            if((K-2) * (i-2) == yellow) {
-                X = K;
-                Y = i;
-                break;
-            }
-        }
-        
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(X);
-        list.add(Y);
-        list.sort((a,b)-> b-a);
-        
-        return list.stream().mapToInt(i->i).toArray();
+        return null;
     }
+    
 }
