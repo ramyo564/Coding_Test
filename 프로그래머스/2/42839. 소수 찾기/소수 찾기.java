@@ -1,34 +1,32 @@
 import java.util.*;
 class Solution {
+    Set<Integer> set = new HashSet<>();
+    
     public int solution(String numbers) {
-        Set<Integer> set = new HashSet<>();
-        boolean[] visited = new boolean[numbers.length()];
-        dfs("", numbers, visited, set);
-        
-        int count = 0;
+        recursive("", numbers);
+        int cnt = 0;
         for (int num : set) {
-            if (isPrime(num)) count++;
+            if (isPrime(num)) cnt++;
         }
-        return count;
+        return cnt;
     }
-
-    private void dfs(String current, String numbers, boolean[] visited, Set<Integer> set) {
-        if (!current.isEmpty()) {
-            set.add(Integer.parseInt(current));
+    private void recursive(String data, String nums){
+        if(!data.equals("")){
+            set.add(Integer.parseInt(data));
         }
-        for (int i = 0; i < numbers.length(); i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                dfs(current + numbers.charAt(i), numbers, visited, set);
-                visited[i] = false;
+        for(int i = 0; i < nums.length(); i++){
+            recursive(data + nums.charAt(i), nums.substring(0, i) + nums.substring(i+1));
+        }
+    }
+    
+    private boolean isPrime(int n){
+        if(n < 2){
+            return false;
+        }
+        for(int i = 2 ; i <= (int)Math.sqrt(n); i++){
+            if(n%i == 0){
+                return false;
             }
-        }
-    }
-
-    private boolean isPrime(int num) {
-        if (num < 2) return false;
-        for (int i = 2; i * i <= num; i++) {
-            if (num % i == 0) return false;
         }
         return true;
     }
