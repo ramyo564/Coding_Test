@@ -1,23 +1,22 @@
 import java.util.*;
-
 class Solution {
     static Set<Integer> set = new HashSet<>();
     public int solution(String numbers) {
+        int cnt = 0; 
         recursive("", numbers);
-        int answer = 0;
         for(int i : set){
             if(isPrime(i)){
-                answer++;
+                cnt++;
             }
         }
-        return answer;
+        return cnt;
     }
-    static void recursive(String com, String others){
-        if(!com.equals("")){
-            set.add(Integer.parseInt(com));
+    static void recursive(String comb, String others){
+        if(!comb.equals("")){
+            set.add(Integer.parseInt(comb));
         }
         for(int i = 0; i < others.length(); i++){
-            recursive(com+others.charAt(i), others.substring(0,i) + others.substring(i+1));
+            recursive(comb+others.charAt(i), others.substring(0, i) + others.substring(i+1));
         }
     }
     
@@ -25,7 +24,7 @@ class Solution {
         if(num < 2){
             return false;
         }
-        for(int i = 2; i <= (int)Math.sqrt(num); i++){
+        for(int i = 2; i<= (int)Math.sqrt(num); i++){
             if(num % i == 0){
                 return false;
             }
