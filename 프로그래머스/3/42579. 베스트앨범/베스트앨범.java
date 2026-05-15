@@ -4,34 +4,34 @@ class Solution {
     public int[] solution(String[] genres, int[] plays) {
         class Song{
             int idx;
-            int play;
-            Song(int idx, int play){
+            int ply;
+            Song(int idx, int ply){
                 this.idx = idx;
-                this.play = play;
+                this.ply = ply;
             }
         }
-        HashMap<String, Integer> gRank = new HashMap<>();
-        HashMap<String, ArrayList<Song>> songs = new HashMap<>();
-        for(int i = 0; i < plays.length; i++){
-            String g = genres[i];
-            int p = plays[i];
-            gRank.put(g, gRank.getOrDefault(g, 0) + p);
-            songs.putIfAbsent(g, new ArrayList<Song>());
-            songs.get(g).add(new Song(i, p));
+        int N = plays.length;
+        HashMap<String, Integer> gtp = new HashMap<>();
+        HashMap<String, ArrayList<Song>> gcl = new HashMap<>();
+        for(int i = 0; i < N; i ++){
+            String genre = genres[i];
+            int play = plays[i];
+            gtp.put(genre, gtp.getOrDefault(genre, 0) + play);
+            gcl.putIfAbsent(genre, new ArrayList<Song>());
+            gcl.get(genre).add(new Song(i, play));
         }
+        List<String> glist = new ArrayList<>(gtp.keySet());
+        glist.sort((a,b) -> gtp.get(b) - gtp.get(a));
         
-        ArrayList<String> list = new ArrayList<>(gRank.keySet());
-        list.sort((a,b)-> gRank.get(b) - gRank.get(a));
-        
-        List<Integer> res = new ArrayList<>();
-        for(String s : list){
-            ArrayList<Song> slist = songs.get(s);
-            slist.sort((a,b) -> b.play - a.play);
-            for(int i = 0; i < Math.min(slist.size(), 2); i++){
-                res.add(slist.get(i).idx);
+        ArrayList<Integer> res = new ArrayList<>();
+        for(String gen : glist){
+            List<Song> arr = new ArrayList<>(gcl.get(gen));
+            arr.sort((a,b) -> b.ply - a.ply);
+            for(int i = 0; i < Math.min(2, arr.size()); i++){
+                res.add(arr.get(i).idx);
             }
         }
-        
+
         return res.stream().mapToInt(i->i).toArray();
     }
 }
