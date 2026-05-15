@@ -6,21 +6,17 @@ class Solution {
         for(int i : scoville){
             pq.offer(i);
         }
-        int res = 0;
-        while(pq.size() > 1){
+        int cnt = 0;
+        while(pq.size() >= 2){
             if(pq.peek() >= K){
-                break;
+                return cnt;
             }
-            int f = pq.poll();
-            int s = pq.poll();
-            int temp = f + (s * 2);
-            pq.offer(temp);
-            res++;
+            pq.offer(pq.poll() + (pq.poll() * 2));
+            cnt++;
         }
-        if(pq.peek() < K){
-            return -1;
+        if(pq.peek() >= K){
+            return cnt;
         }
-
-        return res;
+        return -1;
     }
 }
