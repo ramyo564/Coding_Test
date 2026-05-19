@@ -5,15 +5,13 @@ public class Solution {
         List<Integer> list = new ArrayList<>();
         
         int prev = -1;
-        
-        for(int i : arr){
-            if(i != prev){
-                list.add(i);
+        for (int i : arr){
+            if(prev != i){
                 prev = i;
+                list.add(i);
             }
         }
-        
-        
+
         return list.stream().mapToInt(i->i).toArray();
     }
 }
