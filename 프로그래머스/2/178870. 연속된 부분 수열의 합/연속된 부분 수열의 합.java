@@ -1,28 +1,28 @@
 
 class Solution {
     public int[] solution(int[] sequence, int k) {
-        
         int N = sequence.length;
+        int target = 0;
         int r = 0;
         int l = 0;
         int len = N;
-        int total = 0;
-        int[] ans = new int[2];
+        
+        int[] answer = new int[2];
         while(r < N){
-            total += sequence[r];
-            while(l < N && total > k){
-                total -= sequence[l++];
+            target += sequence[r];
+            while(target > k){
+                target -= sequence[l++];
             }
-            if(total == k){
+            if(target == k){
                 if(len > r - l){
-                    len = r - l;
-                    ans[0] = l;
-                    ans[1] = r;
+                    len = r-l;
+                    answer[0] = l;
+                    answer[1] = r;
                 }
             }
             r++;
         }
         
-        return ans;
+        return answer;
     }
 }
