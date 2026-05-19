@@ -1,19 +1,19 @@
 import java.util.*;
-
 class Solution {
     public String solution(int[] numbers) {
-        String[] data = new String[numbers.length];
+        String[] s = new String[numbers.length];
         for(int i = 0; i < numbers.length; i++){
-            data[i] = String.valueOf(numbers[i]);
+            s[i] = String.valueOf(numbers[i]);
         }
-        Arrays.sort(data, (a,b) -> (b+a).compareTo(a+b));
-        if(data[0].equals("0")){
+        Arrays.sort(s, (a,b) -> (b+a).compareTo(a+b) );
+        StringBuilder sb = new StringBuilder();
+        for(String k : s){
+            sb.append(k);
+        }
+        if(sb.toString().charAt(0) == '0'){
             return "0";
         }
-        StringBuilder sb = new StringBuilder();
-        for(String s : data){
-            sb.append(s);
-        }
+        
         return sb.toString();
     }
 }
