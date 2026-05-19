@@ -1,17 +1,16 @@
+import java.util.*;
 class Solution {
     public int[] solution(int brown, int yellow) {
-       int result = brown + yellow;
-       double squareRoot = Math.sqrt(result);
- 
-            for (int width = (int) squareRoot; width >= 1; width--) {
-                if (result % width == 0) {
-                    int height = result / width;
-                    if ((width - 2) * (height - 2) == yellow) {
-                        return new int[]{height, width};
-                    }
+        int total = brown + yellow;
+        
+        for (int h = 3; h <= total; h++) { // 세로 길이는 최소 3
+            if (total % h == 0) {
+                int w = total / h;
+                if ((w - 2) * (h - 2) == yellow) {
+                    return new int[]{w, h};
                 }
             }
-        return null;
+        }
+        return new int[]{};
     }
-    
 }
