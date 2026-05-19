@@ -1,37 +1,44 @@
 import java.util.*;
-
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
         class Song{
             int idx;
-            int ply;
-            Song(int idx, int ply){
+            int play;
+            Song(int idx, int play){
                 this.idx = idx;
-                this.ply = ply;
+                this.play = play;
             }
         }
-        int N = plays.length;
-        HashMap<String, Integer> gtp = new HashMap<>();
-        HashMap<String, ArrayList<Song>> gcl = new HashMap<>();
+        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<String, ArrayList<Song>> map2 = new HashMap<>();
+        int N = genres.length;
+        
         for(int i = 0; i < N; i ++){
             String genre = genres[i];
             int play = plays[i];
-            gtp.put(genre, gtp.getOrDefault(genre, 0) + play);
-            gcl.putIfAbsent(genre, new ArrayList<Song>());
-            gcl.get(genre).add(new Song(i, play));
+            map.put(genre, map.getOrDefault(genre, 0) + play);
+            map2.putIfAbsent(genre, new ArrayList<Song>());
+            map2.get(genre).add(new Song(i,play));
         }
-        List<String> glist = new ArrayList<>(gtp.keySet());
-        glist.sort((a,b) -> gtp.get(b) - gtp.get(a));
         
-        ArrayList<Integer> res = new ArrayList<>();
-        for(String gen : glist){
-            List<Song> arr = new ArrayList<>(gcl.get(gen));
-            arr.sort((a,b) -> b.ply - a.ply);
-            for(int i = 0; i < Math.min(2, arr.size()); i++){
-                res.add(arr.get(i).idx);
+        List<String> list = new ArrayList<>(map.keySet());
+        list.sort((a,b)-> map.get(b) - map.get(a));
+        
+        
+        List<Integer> res = new ArrayList<>();
+        for(String s : list){
+            List<Song> glst = new ArrayList<>(map2.get(s));
+            glst.sort((a,b) -> {
+                if(a.play == b.play){
+                    return a.idx - b.idx;
+                }
+                return b.play - a.play;
+            });
+            for(int i = 0; i < Math.min(2, glst.size()); i++){
+                res.add(glst.get(i).idx);
             }
         }
-
+        
         return res.stream().mapToInt(i->i).toArray();
     }
 }
