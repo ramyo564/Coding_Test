@@ -1,29 +1,31 @@
 import java.util.*;
-
 class Solution {
     public int solution(int[][] jobs) {
         Arrays.sort(jobs, (a,b)-> a[0] - b[0]);
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->  a[1] - b[1]);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)-> a[1] - b[1]);
+        
         int N = jobs.length;
-        int jIdx = 0;
         int doneJ = 0;
-        int curT = 0;
+        int idx = 0;
+        int curTime  = 0;
         int res = 0;
-        while(doneJ < N ){
-            while(jIdx < N && curT >= jobs[jIdx][0]){
-                pq.offer(new int[] {jobs[jIdx][0], jobs[jIdx][1]});
-                jIdx++;
+        
+        while(doneJ < N){
+            while(idx < N && curTime >= jobs[idx][0]){
+                pq.offer(jobs[idx]);
+                idx++;
             }
             if(pq.isEmpty()){
-                curT = jobs[jIdx][0];
-            }else{
+                curTime = jobs[idx][0];
+            } else {
                 int[] data = pq.poll();
-                curT += data[1];
-                res += curT - data[0];
-                doneJ++;
+                curTime += data[1];
+                res += curTime - data[0];
+                doneJ ++;
+                
             }
+            
         }
-       return res / N;
+        return res / N;
     }
-             
 }
