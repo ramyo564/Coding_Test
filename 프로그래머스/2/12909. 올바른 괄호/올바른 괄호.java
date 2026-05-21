@@ -1,18 +1,21 @@
 import java.util.*;
-
 class Solution {
     boolean solution(String s) {
-        int temp = 0;
+        boolean answer = true;
+        int check = 0;
         for(char c : s.toCharArray()){
-            if(temp < 0){
+            if(c == '('){
+                check++;
+            }else{
+                check--;
+            }
+            if(check < 0){
                 return false;
             }
-            if(c == '('){
-                temp++;        
-            }else {
-                temp--;
-            }
+            
         }
-        return temp == 0;
+
+
+        return check == 0;
     }
 }
