@@ -1,22 +1,21 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        Deque<Integer> dq = new ArrayDeque<>();
         int N = speeds.length;
-        
+        Deque<Integer> dq = new ArrayDeque<>();
         for(int i = 0; i < N; i ++){
             int remain = 100 - progresses[i];
             dq.offer((int)Math.ceil((double)remain/speeds[i]));
         }
         List<Integer> list = new ArrayList<>();
         while(!dq.isEmpty()){
-            int temp = 0;
-            int curr = dq.peek();
-            while(!dq.isEmpty() && dq.peek() <= curr){
+            int cnt = 1;
+            int now = dq.poll();
+            while(!dq.isEmpty() && now >= dq.peek()){
                 dq.poll();
-                temp++;
+                cnt++;
             }
-            list.add(temp);
+            list.add(cnt);
         }
         
         return list.stream().mapToInt(i->i).toArray();
