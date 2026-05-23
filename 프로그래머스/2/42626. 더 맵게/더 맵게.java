@@ -11,8 +11,11 @@ class Solution {
             if(pq.peek() >= K){
                 return cnt;
             }
-            pq.offer(pq.poll() + (pq.poll() * 2));
+            int f = pq.poll();
+            int s = pq.poll();
+            pq.offer(f+(s*2));
             cnt++;
+
         }
         if(pq.peek() >= K){
             return cnt;
