@@ -1,4 +1,5 @@
 import java.util.*;
+
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
         class Song{
@@ -9,36 +10,35 @@ class Solution {
                 this.play = play;
             }
         }
-        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<String, Integer> map1 = new HashMap<>();
         HashMap<String, ArrayList<Song>> map2 = new HashMap<>();
-        int N = genres.length;
-        
+        int N = plays.length;
         for(int i = 0; i < N; i ++){
-            String genre = genres[i];
-            int play = plays[i];
-            map.put(genre, map.getOrDefault(genre, 0) + play);
-            map2.putIfAbsent(genre, new ArrayList<Song>());
-            map2.get(genre).add(new Song(i,play));
+            String gn = genres[i];
+            int ply = plays[i];
+            map1.put(gn, map1.getOrDefault(gn, 0) + ply);
+            map2.putIfAbsent(gn, new ArrayList<>());
+            map2.get(gn).add(new Song(i , ply));
         }
+        List<String> genr = new ArrayList<>(map1.keySet());
+        genr.sort((a,b)-> map1.get(b) - map1.get(a));
         
-        List<String> list = new ArrayList<>(map.keySet());
-        list.sort((a,b)-> map.get(b) - map.get(a));
-        
-        
-        List<Integer> res = new ArrayList<>();
-        for(String s : list){
-            List<Song> glst = new ArrayList<>(map2.get(s));
-            glst.sort((a,b) -> {
+        List<Integer> ans = new ArrayList<>();
+        for(String gn : genr){
+            List<Song> res = new ArrayList<>(map2.get(gn));
+            res.sort((a,b) -> {
                 if(a.play == b.play){
-                    return a.idx - b.idx;
+                    return 0;
                 }
                 return b.play - a.play;
-            });
-            for(int i = 0; i < Math.min(2, glst.size()); i++){
-                res.add(glst.get(i).idx);
+                }
+            );
+            for(int i = 0; i < Math.min(2, res.size()); i ++){
+                ans.add(res.get(i).idx);
             }
         }
         
-        return res.stream().mapToInt(i->i).toArray();
+        
+        return ans.stream().mapToInt(i->i).toArray();
     }
 }
