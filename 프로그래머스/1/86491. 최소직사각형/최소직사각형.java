@@ -2,17 +2,17 @@ import java.util.*;
 
 class Solution {
     public int solution(int[][] sizes) {
-        int maxY = 0;
-        int maxX = 0;
-        
-        for(int[] size : sizes){
-            int tempA = Math.max(size[1], size[0]);
-            int tempB = Math.min(size[1], size[0]);
-            maxY = Math.max(tempA, maxY);
-            maxX = Math.max(tempB, maxX);
+        int max = 0;
+        int min = 0;
+        for (int i = 0; i < sizes.length; i++){
+            int w = sizes[i][0];
+            int h = sizes[i][1];
+            
+            max = Math.max(max, Math.max(w,h));
+            min = Math.max(min, Math.min(w,h));
+            
         }
-        
-        
-        return maxY*maxX;
+        int answer = min * max;
+        return answer;
     }
 }
